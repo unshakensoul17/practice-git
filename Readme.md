@@ -140,10 +140,10 @@ end
 %% ── INDEXING PIPELINE ────────────────────────────────────
 subgraph WRK["⚙️ Worker Thread (Background)"]
     direction TB
-    Parser["🌳 Tree-sitter WASM\nAST Parser"]
-    Extractor["🔬 Symbol Extractor\nAST Traversal"]
-    Index["📦 Composite Index\nCross-file Resolution"]
-    DB[("🗄️ SQLite Database\nGraph Store")]
+    Parser["🌳 Tree-sitter WASM | AST Parser"]
+    Extractor["🔬 Symbol Extractor | AST Traversal"]
+    Index["📦 Composite Index | Cross-file Resolution"]
+    DB[("🗄️ SQLite Database | Graph Store")]
 
     Parser --> Extractor --> Index --> DB
 end
@@ -158,28 +158,28 @@ end
 %% ── VISUALIZATION PIPELINE ───────────────────────────────
 subgraph VIZ["🌐 React Webview"]
     GraphData["📊 Graph Data"]
-    Filter["🔍 View Mode Filter\nArchitecture / Codebase / Trace"]
-    ELK["📐 ELK Layout Engine\nHierarchical Positioning"]
-    ReactFlow["🗺️ React Flow\nInteractive Canvas"]
-    Inspector["🔎 Inspector Panel\nMetrics & AI Actions"]
+    Filter["🔍 View Mode Filter | Architecture / Codebase / Trace"]
+    ELK["📐 ELK Layout Engine | Hierarchical Positioning"]
+    ReactFlow["🗺️ React Flow | Interactive Canvas"]
+    Inspector["🔎 Inspector Panel | Metrics & AI Actions"]
 end
 
 %% ── AI PIPELINE ──────────────────────────────────────────
 subgraph AI["🧠 AI Orchestration Layer"]
     direction TB
-    Router{"⚡ Intent Router\nQuery Classification"}
-    cAST["📋 cAST\nContext Assembly\n(code + graph + metrics)"]
+    Router{"⚡ Intent Router | Query Classification"}
+    cAST["📋 cAST | Context Assembly | code + graph + metrics"]
 
     subgraph REFLEX["Reflex Path  •  < 300ms"]
-        Groq["Groq\nLlama 3.1 70B"]
+        Groq["Groq | Llama 3.1 70B"]
     end
 
     subgraph STRATEGIC["Strategic Path  •  2–5s"]
-        Gemini["Google\nGemini 3 flash-preview"]
-        Bedrock["AWS\nBedrock"]
+        Gemini["Google | Gemini 3.0 Flash Preview"]
+        Bedrock["AWS | Bedrock"]
     end
 
-    Cache[("💾 Response\nCache")]
+    Cache[("💾 Response Cache")]
 
     Router -->|"Quick / Explain"| cAST
     Router -->|"Deep / Refactor"| cAST
@@ -383,7 +383,7 @@ Click any node to open the Inspector Panel on the right:
 
 | Property | Value |
 |----------|-------|
-| Model | Gemini 3 Flash-Preview |
+| Model | Gemini 3.0 Flash Preview |
 | Typical Latency | 2–5s |
 | Best For | Deep analysis, refactoring plans, architecture insights |
 | Get API Key | [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey) |
