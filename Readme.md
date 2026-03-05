@@ -1455,3 +1455,28 @@ class Manager,WorkerThread worker
 class Parser parser
 class DB database
 ```
+
+
+
+```mermaid
+flowchart LR
+
+Q([User Query]) --> Router{Intent Router}
+
+Router -->|Short Query / Explain| Reflex[Reflex Path]
+Router -->|Large Query / Refactor| Strategic[Strategic Path]
+
+subgraph Groq["Groq - Llama 3.1 70B"]
+    Reflex -->|Latency < 300ms| FastContext[Lightweight Context]
+end
+
+subgraph Gemini["Google Gemini 1.5 Pro"]
+    Strategic -->|Latency 2-5s| DeepContext[Deep cAST Context]
+end
+
+FastContext --> Cache[(SQLite Response Cache)]
+DeepContext --> Cache
+Cache --> UI([Inspector UI])
+
+style Reflex fill:#f59e0b,color:#ffffff
+```
