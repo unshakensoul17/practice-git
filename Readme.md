@@ -38,6 +38,11 @@
 - [Design Decisions & Trade-Offs](#️-design-decisions--trade-offs)
 - [Getting Started](#-getting-started)
 - [Usage Guide](#-usage-guide)
+  - [Commands](#commands)
+  - [View Modes](#view-modes)
+  - [CodeLens Annotations](#codelens-annotations)
+  - [Inspector Panel](#inspector-panel)
+  - [Search & Filtering](#search--filtering)
 - [AI Integration](#-ai-integration)
 - [Configuration](#-configuration)
 - [Performance](#-performance)
@@ -108,6 +113,15 @@ Click any node in the graph to open a rich details panel:
 - Blast radius analysis — see exactly which symbols would be affected by a change
 - AI-generated, actionable refactoring suggestions
 
+### 📊 CodeLens in the Editor
+
+Sentinel Flow surfaces graph intelligence directly inside your source files — no need to switch to the graph view. Every function gets an inline annotation showing its heat score and a one-click trace shortcut.
+
+- Complexity (heat) score displayed above every function
+- ⚠️ warning indicator when complexity exceeds **15**
+- 🔴 critical indicator when fan-in exceeds **20**
+- `⚡ Trace` action that instantly opens the call-trace graph for that function
+
 <!--
   💡 IMAGE SUGGESTION:
   Consider adding a 3-panel screenshot here:
@@ -175,7 +189,7 @@ subgraph AI["🧠 AI Orchestration Layer"]
     end
 
     subgraph STRATEGIC["Strategic Path  •  2–5s"]
-        Gemini["Google | Gemini 3.0 Flash Preview"]
+        Gemini["Google | Gemini 2.0 Flash Preview"]
         Bedrock["AWS | Bedrock"]
     end
 
@@ -357,6 +371,33 @@ Click any node to open the Inspector Panel on the right:
 - **Risks & Health** — complexity, coupling, and fragility scores with color-coded indicators
 - **AI Actions** — generate explanations, suggest refactors, or run a security audit on the selected symbol
 
+### CodeLens Annotations
+
+Open any `.ts`, `.py`, or `.c` file — Sentinel Flow injects live CodeLens annotations above every function without any extra steps:
+
+```
+// [Heat: 7]  [⚡ Trace]
+async function processPayment(order: Order): Promise<Receipt> {
+```
+
+| Annotation | Meaning |
+|------------|---------|
+| `[Heat: N]` | Complexity score for this function. Higher = riskier. |
+| ⚠️ `[Heat: 15+]` | Warning threshold — function warrants review |
+| 🔴 `[Heat: 20+]` | Critical threshold — fan-in too high, refactor recommended |
+| `[⚡ Trace]` | Click to open the Trace graph starting from this function |
+
+> **Tip:** CodeLens scores update automatically after each incremental index. You don't need to reopen the file.
+
+### Inspector Panel
+
+Click any node to open the Inspector Panel on the right:
+
+- **Overview** — basic metrics and file metadata
+- **Dependencies** — incoming and outgoing relationship list
+- **Risks & Health** — complexity, coupling, and fragility scores with color-coded indicators
+- **AI Actions** — generate explanations, suggest refactors, or run a security audit on the selected symbol
+
 ### Search & Filtering
 
 - **Search Bar** — filter by symbol name or AI-generated tags (minimum 3 characters)
@@ -383,7 +424,7 @@ Click any node to open the Inspector Panel on the right:
 
 | Property | Value |
 |----------|-------|
-| Model | Gemini 3.0 Flash Preview |
+| Model | Gemini 2.0 Flash Preview |
 | Typical Latency | 2–5s |
 | Best For | Deep analysis, refactoring plans, architecture insights |
 | Get API Key | [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey) |
