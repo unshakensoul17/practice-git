@@ -35,6 +35,7 @@
 - [Overview](#-overview)
 - [Features](#-features)
 - [Architecture](#-architecture)
+- [Design Decisions & Trade-Offs](#️-design-decisions--trade-offs)
 - [Getting Started](#-getting-started)
 - [Usage Guide](#-usage-guide)
 - [AI Integration](#-ai-integration)
@@ -205,16 +206,19 @@ style Strategic fill:#818cf8,stroke:#3730a3,stroke-width:2px,color:#000
 
 ---
 
-### ⚖️ Design Decisions & Trade-Offs
-To achieve "Enterprise-Grade" performance entirely within the local VS Code environment, we had to make specific architectural choices over standard alternatives:
+## ⚖️ Design Decisions & Trade-Offs
+
+To achieve enterprise-grade performance entirely within the local VS Code environment, we had to make specific architectural choices over standard alternatives:
 
 | Technology Choice | The Alternative | Why We Chose It |
 | :--- | :--- | :--- |
 | **Tree-sitter (WASM)** | *Regex or Standard AST Parsers* | Regex is too fragile for complex code, and standard parsers are slow. Tree-sitter allows us to do **incremental, language-agnostic parsing** at native speeds directly in the browser/worker environment. |
 | **SQLite (sql.js)** | *In-Memory JSON or Neo4j* | Neo4j requires external hosting (breaking local privacy). In-memory JSON crashes VS Code on large codebases. SQLite gives us **ACID transactions, O(1) lookups, and minimal memory footprint**. |
-| **Dual-Path AI (Groq + Gemini)** | *Routing everything to GPT-4o* | Using a single large model for everything creates terrible UX (3-5s wait times for simple tooltips). Routing "Reflex" queries to **Groq (Llama 3.1) gives us <300ms latency**, saving the heavy lifting for Gemini. |
+| **Dual-Path AI (Groq + Gemini)** | *Routing everything to GPT-4o* | Using a single large model for everything creates terrible UX (3–5s wait times for simple tooltips). Routing "Reflex" queries to **Groq (Llama 3.1) gives us <300ms latency**, saving the heavy lifting for Gemini. |
 | **ELK.js Layout Engine** | *D3.js or Force-Directed Graphs* | Force-directed graphs turn into a messy "hairball" with 500+ nodes. ELK (Eclipse Layout Kernel) provides **deterministic, hierarchical layering** which is essential for reading architectural domains. |
 | **Worker Thread Architecture** | *Running logic in Extension Host* | Running AST extraction and DB queries in the main extension host would freeze the VS Code UI. Isolating this in a **background worker thread** ensures 60 FPS scrolling and typing, even while indexing 5,000 files. |
+
+---
 
 ## 🚀 Getting Started
 
