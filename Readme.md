@@ -175,7 +175,7 @@ subgraph AI["🧠 AI Orchestration Layer"]
     end
 
     subgraph STRATEGIC["Strategic Path  •  2–5s"]
-        Gemini["Google\nGemini 1.5 Pro"]
+        Gemini["Google\nGemini 3 flash-preview"]
         Bedrock["AWS\nBedrock"]
     end
 
@@ -383,7 +383,7 @@ Click any node to open the Inspector Panel on the right:
 
 | Property | Value |
 |----------|-------|
-| Model | Gemini 1.5 Pro |
+| Model | Gemini 3 Flash-Preview |
 | Typical Latency | 2–5s |
 | Best For | Deep analysis, refactoring plans, architecture insights |
 | Get API Key | [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey) |
