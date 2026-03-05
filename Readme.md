@@ -1478,5 +1478,41 @@ FastContext --> Cache[(SQLite Response Cache)]
 DeepContext --> Cache
 Cache --> UI([Inspector UI])
 
-style Reflex fill:#f59e0b,color:#ffffff
+style Reflex fill:#fbbf24,stroke:#b45309,stroke-width:2px,color:#000
+style Strategic fill:#818cf8,stroke:#3730a3,stroke-width:2px,color:#000
+```
+```mermaid
+graph TD
+
+subgraph cAST["Context Assembly Strategy (90% Token Reduction)"]
+    Target["Target Symbol\nFull Source Code"]
+
+    Dep1["Incoming Dependency\nAuth.ts"]
+    Dep2["Outgoing Dependency\nDB.ts"]
+    Dep3["Outgoing Dependency\nLogger.ts"]
+
+    Dep1 -.->|Calls| Target
+    Target -.->|Imports| Dep2
+    Target -.->|Calls| Dep3
+end
+
+style Target fill:#ef4444,stroke:#7f1d1d,stroke-width:2px,color:#ffffff
+style Dep1 fill:#9ca3af,stroke:#374151,stroke-width:2px,color:#000000
+style Dep2 fill:#9ca3af,stroke:#374151,stroke-width:2px,color:#000000
+style Dep3 fill:#9ca3af,stroke:#374151,stroke-width:2px,color:#000000
+```
+
+```mermaid
+graph LR
+
+A[Source Files] -->|Content Hash Check| B[Tree-sitter WASM]
+B -->|AST Traversal| C[Symbol Extractor]
+C -->|Nodes and Edges| D[(SQLite Graph DB)]
+D -->|Export| E{View Mode Filter}
+E -->|Architecture / Trace| F[ELK Layout Engine]
+F -->|Positioned Graph| G[React Webview]
+
+style A fill:#a78bfa,stroke:#4c1d95,stroke-width:2px,color:#000
+style D fill:#fbbf24,stroke:#b45309,stroke-width:2px,color:#000
+style G fill:#60a5fa,stroke:#1e3a8a,stroke-width:2px,color:#000
 ```
